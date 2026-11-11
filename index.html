@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101010">
+<title>UWEG — Ukrainische Wehrpflicht-Erfassungsstelle</title>
+
+<style>
+:root {
+    --black:#101010;
+    --panel:#191919;
+    --panel2:#222;
+    --red:#d71920;
+    --yellow:#f2c400;
+    --white:#fff;
+    --muted:#aaa;
+    --line:rgba(255,255,255,.12);
+}
+
+* {box-sizing:border-box;margin:0;padding:0}
+
+html {
+    scroll-behavior:smooth;
+    scroll-padding-top:90px;
+}
+
+body {
+    background:var(--black);
+    color:var(--white);
+    font-family:Arial,Helvetica,sans-serif;
+    line-height:1.6;
+}
+
+a {color:inherit;text-decoration:none}
+button,select {font:inherit}
+
+.container {
+    width:min(1200px,calc(100% - 40px));
+    margin:auto;
+}
+
+/* HEADER */
+
+header {
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(16,16,16,.97);
+    border-bottom:1px solid var(--line);
+}
+
+.header-inner {
+    min-height:78px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-weight:900;
+    letter-spacing:2px;
+    font-size:23px;
+}
+
+.logo-symbol {
+    width:42px;
+    height:42px;
+    display:grid;
+    place-items:center;
+    background:var(--red);
+    font-size:22px;
+}
+
+.logo small {
+    display:block;
+    font-size:9px;
+    letter-spacing:1px;
+    color:var(--muted);
+}
+
+nav {
+    display:flex;
+    gap:22px;
+    align-items:center;
+}
+
+nav a {
+    font-size:11px;
+    font-weight:900;
+    color:#ddd;
+    transition:.2s;
+}
+
+nav a:hover {color:var(--yellow)}
+
+.header-controls {
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+select {
+    background:var(--panel);
+    color:white;
+    border:1px solid var(--line);
+    padding:10px;
+    border-radius:3px;
+}
+
+.menu-button {
+    display:none;
+    background:var(--panel);
+    border:1px solid var(--line);
+    color:white;
+    padding:9px 13px;
+    font-size:19px;
+}
+
+/* HERO */
+
+.hero {
+    min-height:570px;
+    display:flex;
+    align-items:center;
+    background:
+        linear-gradient(90deg,rgba(0,0,0,.98),rgba(0,0,0,.62)),
+        radial-gradient(circle at 85% 40%,#671b1b,transparent 55%);
+    border-bottom:4px solid var(--red);
+}
+
+.hero-content {padding:100px 0}
+
+.eyebrow {
+    color:var(--yellow);
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:3px;
+    margin-bottom:25px;
+}
+
+.eyebrow:before {
+    content:"";
+    display:inline-block;
+    width:28px;
+    height:3px;
+    background:var(--red);
+    margin-right:12px;
+    vertical-align:middle;
+}
+
+.hero h1 {
+    font-size:clamp(42px,7vw,82px);
+    line-height:1.02;
+    font-weight:900;
+    letter-spacing:-2px;
+    max-width:900px;
+}
+
+.hero h1 span {color:var(--red)}
+
+.hero-description {
+    max-width:650px;
+    color:#ccc;
+    margin-top:25px;
+    font-size:16px;
+}
+
+.actions {
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:35px;
+}
+
+.btn {
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    min-height:48px;
+    padding:13px 23px;
+    border:1px solid transparent;
+    font-size:12px;
+    font-weight:900;
+    transition:.2s;
+}
+
+.btn-red {background:var(--red);color:white}
+.btn-red:hover {background:#ad1118}
+
+.btn-outline {border-color:#777}
+.btn-outline:hover {border-color:var(--yellow);color:var(--yellow)}
+
+/* SECTIONS */
+
+.content-section {padding:85px 0}
+
+.section-label {
+    color:var(--red);
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:3px;
+    margin-bottom:12px;
+}
+
+.section-title {
+    font-size:clamp(29px,5vw,45px);
+    line-height:1.1;
+    font-weight:900;
+    margin-bottom:20px;
+}
+
+.section-description {
+    color:var(--muted);
+    max-width:700px;
+    margin-bottom:35px;
+}
+
+/* CARDS */
+
+.cards {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.card {
+    background:var(--panel);
+    border:1px solid var(--line);
+    padding:27px;
+    min-height:220px;
+    transition:.2s;
+}
+
+.card:hover {
+    border-color:var(--red);
+    transform:translateY(-3px);
+}
+
+.card-number {
+    color:var(--red);
+    font-weight:900;
+    font-size:12px;
+    letter-spacing:2px;
+}
+
+.card h3 {
+    font-size:19px;
+    margin:20px 0 12px;
+    text-transform:uppercase;
+}
+
+.card p {color:var(--muted);font-size:14px}
+
+.card-link {
+    display:inline-block;
+    margin-top:20px;
+    color:var(--yellow);
+    font-size:12px;
+    font-weight:900;
+}
+
+/* POLICY */
+
+.dark-section {
+    background:#191919;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+}
+
+.policy-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.policy-box {
+    background:#222;
+    padding:30px;
+    border-left:4px solid var(--red);
+}
+
+.policy-box h3 {
+    font-size:20px;
+    margin-bottom:15px;
+}
+
+.policy-box p {
+    color:#bbb;
+    font-size:14px;
+}
+
+/* DOCUMENTS */
+
+.document-list {display:grid;gap:12px}
+
+.document {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    padding:20px;
+    background:var(--panel);
+    border:1px solid var(--line);
+}
+
+.document strong {font-size:14px}
+
+.document span {
+    color:var(--yellow);
+    font-size:11px;
+    font-weight:900;
+}
+
+/* CONTACT */
+
+.contact {
+    background:var(--red);
+    padding:40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:25px;
+}
+
+.contact h2 {
+    font-size:clamp(26px,4vw,38px);
+    line-height:1.1;
+}
+
+.contact p {margin-top:12px;color:#eee}
+
+.contact .btn {
+    background:white;
+    color:#111;
+    flex-shrink:0;
+}
+
+.contact .btn:hover {background:var(--yellow)}
+
+/* FOOTER */
+
+footer {
+    background:#080808;
+    border-top:1px solid var(--line);
+}
+
+.footer-inner {
+    min-height:100px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    color:var(--muted);
+    font-size:12px;
+}
+
+.footer-logo {
+    color:white;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:950px) {
+    nav {gap:12px}
+    nav a {font-size:10px}
+}
+
+@media(max-width:850px) {
+    .header-inner {min-height:70px}
+
+    .menu-button {display:block}
+
+    nav {
+        display:none;
+        position:absolute;
+        top:70px;
+        left:0;
+        right:0;
+        background:#111;
+        padding:15px 20px 25px;
+        border-bottom:1px solid var(--line);
+        flex-direction:column;
+        align-items:stretch;
+        gap:0;
+    }
+
+    nav.open {display:flex}
+
+    nav a {
+        padding:15px 0;
+        border-bottom:1px solid var(--line);
+        font-size:13px;
+    }
+
+    .cards {grid-template-columns:repeat(2,1fr)}
+    .policy-grid {grid-template-columns:1fr}
+}
+
+@media(max-width:550px) {
+    .container {width:calc(100% - 32px)}
+
+    .logo {font-size:19px}
+    .logo-symbol {width:36px;height:36px}
+
+    .hero {min-height:500px}
+    .hero-content {padding:75px 0}
+    .hero h1 {letter-spacing:-1px}
+    .hero-description {font-size:14px}
+
+    .content-section {padding:65px 0}
+
+    .cards {grid-template-columns:1fr}
+    .card {min-height:auto}
+
+    .contact {
+        padding:28px 22px;
+        align-items:stretch;
+        flex-direction:column;
+    }
+
+    .contact .btn {width:100%}
+
+    .footer-inner {
+        padding:28px 0;
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .actions {flex-direction:column}
+    .actions .btn {width:100%}
+}
+
+@media(prefers-reduced-motion:reduce) {
+    html {scroll-behavior:auto}
+    *,*::before,*::after {transition:none!important}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="container header-inner">
+
+        <a href="#home" class="logo">
+            <div class="logo-symbol">U</div>
+            <div>
+                UWEG
+                <small>UKRAINISCHE WEHRPFLICHT-ERFASSUNGSSTELLE</small>
+            </div>
+        </a>
+
+        <nav id="navigation">
+            <a href="#about" data-i18n="navAbout">ПРО UWEG</a>
+            <a href="#departments" data-i18n="navDepartments">НАПРЯМКИ</a>
+            <a href="#policy" data-i18n="navPolicy">ПОЛІТИКА</a>
+            <a href="#data" data-i18n="navData">ДАНІ</a>
+            <a href="#documents" data-i18n="navDocuments">ДОКУМЕНТИ</a>
+            <a href="#contact" data-i18n="navContact">КОНТАКТИ</a>
+        </nav>
+
+        <div class="header-controls">
+            <select id="language" aria-label="Language">
+                <option value="uk">UA</option>
+                <option value="de">DE</option>
+                <option value="ru">RU</option>
+            </select>
+
+            <button class="menu-button" id="menuButton"
+                type="button" aria-label="Меню" aria-expanded="false">☰</button>
+        </div>
+
+    </div>
+</header>
+
+<main>
+
+<section class="hero" id="home">
+    <div class="container hero-content">
+        <div class="eyebrow" data-i18n="heroLabel">
+            UWEG — ЦЕНТР ІНФОРМАЦІЙНОЇ КООРДИНАЦІЇ
+        </div>
+
+        <h1>
+            <span data-i18n="heroLine1">ОБЛІК.</span><br>
+            <span data-i18n="heroLine2">КООРДИНАЦІЯ.</span><br>
+            <span data-i18n="heroLine3">ВІДПОВІДАЛЬНІСТЬ.</span>
+        </h1>
+
+        <p class="hero-description" data-i18n="heroText">
+            Інформаційний портал UWEG: військовий облік, міжвідомча взаємодія,
+            використання інформаційних ресурсів та нормативні матеріали.
+        </p>
+
+        <div class="actions">
+            <a href="#departments" class="btn btn-red" data-i18n="heroButton">
+                ПЕРЕГЛЯНУТИ НАПРЯМКИ
+            </a>
+            <a href="#documents" class="btn btn-outline" data-i18n="heroButton2">
+                ДОКУМЕНТАЦІЯ
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="content-section" id="about">
+    <div class="container">
+        <div class="section-label" data-i18n="aboutLabel">01 / ПРО UWEG</div>
+        <h2 class="section-title">UKRAINISCHE WEHRPFLICHT-ERFASSUNGSSTELLE</h2>
+        <p class="section-description" data-i18n="aboutText">
+            UWEG — інформаційна структура, спрямована на питання військового
+            обліку, нормативного регулювання та міжвідомчої координації.
+        </p>
+    </div>
+</section>
+
+<section class="content-section dark-section" id="departments">
+    <div class="container">
+        <div class="section-label" data-i18n="departmentsLabel">02 / НАПРЯМКИ</div>
+        <h2 class="section-title" data-i18n="departmentsTitle">ОСНОВНІ НАПРЯМКИ ДІЯЛЬНОСТІ</h2>
+        <p class="section-description" data-i18n="departmentsText">
+            Основні інформаційні напрями UWEG.
+        </p>
+
+        <div class="cards">
+
+            <article class="card">
+                <div class="card-number">01 /</div>
+                <h3 data-i18n="card1Title">ВІЙСЬКОВИЙ ОБЛІК</h3>
+                <p data-i18n="card1Text">Інформація про військовий обов'язок, облік та нормативні положення.</p>
+                <a class="card-link" href="#policy" data-i18n="details">ДЕТАЛЬНІШЕ →</a>
+            </article>
+
+            <article class="card">
+                <div class="card-number">02 /</div>
+                <h3 data-i18n="card2Title">ДЕПОРТАЦІЙНА ПОЛІТИКА</h3>
+                <p data-i18n="card2Text">Політика BRV щодо осіб, які ухиляються від військового обов'язку.</p>
+                <a class="card-link" href="#policy" data-i18n="details">ДЕТАЛЬНІШЕ →</a>
+            </article>
+
+            <article class="card">
+                <div class="card-number">03 /</div>
+                <h3 data-i18n="card3Title">РЕЗЕРВ+</h3>
+                <p data-i18n="card3Text">Інформація про використання відомостей із системи «Резерв+».</p>
+                <a class="card-link" href="#data" data-i18n="details">ДЕТАЛЬНІШЕ →</a>
+            </article>
+
+            <article class="card">
+                <div class="card-number">04 /</div>
+                <h3 data-i18n="card4Title">МІЖВІДОМЧА ВЗАЄМОДІЯ</h3>
+                <p data-i18n="card4Text">Координація інформаційної взаємодії між відповідними установами.</p>
+                <a class="card-link" href="#policy" data-i18n="details">ДЕТАЛЬНІШЕ →</a>
+            </article>
+
+            <article class="card">
+                <div class="card-number">05 /</div>
+                <h3 data-i18n="card5Title">НОРМАТИВНІ МАТЕРІАЛИ</h3>
+                <p data-i18n="card5Text">Рішення, положення та документи BRV.</p>
+                <a class="card-link" href="#documents" data-i18n="details">ДЕТАЛЬНІШЕ →</a>
+            </article>
+
+            <article class="card">
+                <div class="card-number">06 /</div>
+                <h3 data-i18n="card6Title">ЗВЕРНЕННЯ</h3>
+                <p data-i18n="card6Text">Контактна інформація та порядок інформаційних звернень.</p>
+                <a class="card-link" href="#contact" data-i18n="details">ДЕТАЛЬНІШЕ →</a>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<section class="content-section" id="policy">
+    <div class="container">
+        <div class="section-label" data-i18n="policyLabel">03 / ПОЛІТИКА BRV</div>
+        <h2 class="section-title" data-i18n="policyTitle">ДЕПОРТАЦІЙНА ПОЛІТИКА</h2>
+        <p class="section-description" data-i18n="policyIntro">
+            Позиція BRV щодо осіб, які ухиляються від виконання військового обов'язку.
+        </p>
+
+        <div class="policy-grid">
+            <div class="policy-box">
+                <h3 data-i18n="policyBox1Title">ЗАГАЛЬНИЙ ПІДХІД</h3>
+                <p data-i18n="policyBox1Text">
+                    Політика BRV передбачає розгляд питання повернення осіб,
+                    визначених відповідно до встановлених критеріїв як такі,
+                    що ухиляються від військового обов'язку.
+                </p>
+            </div>
+
+            <div class="policy-box">
+                <h3 data-i18n="policyBox2Title">ПРАВОВІ ПИТАННЯ</h3>
+                <p data-i18n="policyBox2Text">
+                    Рішення щодо повернення або видворення розглядаються
+                    відповідно до правових підстав, компетенції органів
+                    та процедур індивідуального оскарження.
+                </p>
+            </div>
+
+            <div class="policy-box">
+                <h3 data-i18n="policyBox3Title">КАТЕГОРІЇ ОСІБ</h3>
+                <p data-i18n="policyBox3Text">
+                    Інформаційний розділ охоплює питання військового обліку,
+                    порушення правил обліку та інших передбачених законом підстав.
+                </p>
+            </div>
+
+            <div class="policy-box">
+                <h3 data-i18n="policyBox4Title">МІЖНАРОДНА ВЗАЄМОДІЯ</h3>
+                <p data-i18n="policyBox4Text">
+                    Питання співпраці з іноземними органами розглядаються
+                    з урахуванням міжнародного права та законодавства відповідних держав.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content-section dark-section" id="data">
+    <div class="container">
+        <div class="section-label" data-i18n="dataLabel">04 / ІНФОРМАЦІЙНІ РЕСУРСИ</div>
+        <h2 class="section-title" data-i18n="dataTitle">ВИКОРИСТАННЯ ДАНИХ ІЗ «РЕЗЕРВ+»</h2>
+        <p class="section-description" data-i18n="dataIntro">
+            Інформаційний напрям щодо відомостей, які містяться в українській системі «Резерв+».
+        </p>
+
+        <div class="policy-grid">
+            <div class="policy-box">
+                <h3 data-i18n="dataBox1Title">ІНФОРМАЦІЙНІ ВІДОМОСТІ</h3>
+                <p data-i18n="dataBox1Text">Розгляд категорій відомостей, їх призначення та нормативних підстав обробки.</p>
+            </div>
+
+            <div class="policy-box">
+                <h3 data-i18n="dataBox2Title">ЗАХИСТ ДАНИХ</h3>
+                <p data-i18n="dataBox2Text">Доступ до персональних даних, їх передача та обробка відповідно до правових підстав.</p>
+            </div>
+
+            <div class="policy-box">
+                <h3 data-i18n="dataBox3Title">МІЖВІДОМЧИЙ ОБМІН</h3>
+                <p data-i18n="dataBox3Text">Правові моделі обміну інформацією між компетентними органами.</p>
+            </div>
+
+            <div class="policy-box">
+                <h3 data-i18n="dataBox4Title">ПЕРЕВІРКА ВІДОМОСТЕЙ</h3>
+                <p data-i18n="dataBox4Text">Точність, актуальність та відповідність відомостей правовим вимогам.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content-section" id="documents">
+    <div class="container">
+        <div class="section-label" data-i18n="documentsLabel">05 / ДОКУМЕНТАЦІЯ</div>
+        <h2 class="section-title" data-i18n="documentsTitle">НОРМАТИВНІ МАТЕРІАЛИ</h2>
+        <p class="section-description" data-i18n="documentsIntro">
+            Основні документи та положення, пов'язані з діяльністю UWEG.
+        </p>
+
+        <div class="document-list">
+            <div class="document">
+                <strong data-i18n="document1">Рішення № 2 BRV Parlament</strong>
+                <span data-i18n="documentStatus">ДОКУМЕНТ</span>
+            </div>
+            <div class="document">
+                <strong data-i18n="document2">Положення про UWEG</strong>
+                <span data-i18n="documentStatus">ДОКУМЕНТ</span>
+            </div>
+            <div class="document">
+                <strong data-i18n="document3">Положення про міжвідомчу взаємодію</strong>
+                <span data-i18n="documentStatus">ДОКУМЕНТ</span>
+            </div>
+            <div class="document">
+                <strong data-i18n="document4">Політика обробки персональних даних</strong>
+                <span data-i18n="documentStatus">ДОКУМЕНТ</span>
+            </div>
+        </div>
+
+        <div class="policy-box" style="margin-top:25px">
+            <h3 data-i18n="cooperationTitle">МІЖВІДОМЧА СПІВПРАЦЯ</h3>
+            <p data-i18n="cooperationText">
+                Взаємодія Міністерства внутрішніх справ BRV та Міністерства оборони України.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="content-section dark-section" id="contact">
+    <div class="container">
+        <div class="contact">
+            <div>
+                <h2 data-i18n="contactTitle">КОНТАКТИ UWEG</h2>
+                <p data-i18n="contactText">Для інформаційних звернень використовуйте WhatsApp.</p>
+            </div>
+
+            <a class="btn" href="https://wa.me/4915150105032"
+               target="_blank" rel="noopener noreferrer"
+               data-i18n="contactButton">НАПИСАТИ</a>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <div class="container footer-inner">
+        <div class="footer-logo">UWEG</div>
+        <div data-i18n="footerText">Ukrainische Wehrpflicht-Erfassungsstelle</div>
+        <div>© <span id="year"></span> UWEG</div>
+    </div>
+</footer>
+
+<script>
+"use strict";
+
+const translations = {
+uk:{
+navAbout:"ПРО UWEG",navDepartments:"НАПРЯМКИ",navPolicy:"ПОЛІТИКА",navData:"ДАНІ",navDocuments:"ДОКУМЕНТИ",navContact:"КОНТАКТИ",
+heroLabel:"UWEG — ЦЕНТР ІНФОРМАЦІЙНОЇ КООРДИНАЦІЇ",
+heroLine1:"ОБЛІК.",heroLine2:"КООРДИНАЦІЯ.",heroLine3:"ВІДПОВІДАЛЬНІСТЬ.",
+heroText:"Інформаційний портал UWEG: військовий облік, міжвідомча взаємодія, використання інформаційних ресурсів та нормативні матеріали.",
+heroButton:"ПЕРЕГЛЯНУТИ НАПРЯМКИ",heroButton2:"ДОКУМЕНТАЦІЯ",
+aboutLabel:"01 / ПРО UWEG",aboutText:"UWEG — інформаційна структура, спрямована на питання військового обліку, нормативного регулювання та міжвідомчої координації.",
+departmentsLabel:"02 / НАПРЯМКИ",departmentsTitle:"ОСНОВНІ НАПРЯМКИ ДІЯЛЬНОСТІ",departmentsText:"Основні інформаційні напрями UWEG.",
+card1Title:"ВІЙСЬКОВИЙ ОБЛІК",card1Text:"Інформація про військовий обов'язок, облік та нормативні положення.",
+card2Title:"ДЕПОРТАЦІЙНА ПОЛІТИКА",card2Text:"Політика BRV щодо осіб, які ухиляються від військового обов'язку.",
+card3Title:"РЕЗЕРВ+",card3Text:"Інформація про використання відомостей із системи «Резерв+».",
+card4Title:"МІЖВІДОМЧА ВЗАЄМОДІЯ",card4Text:"Координація інформаційної взаємодії між відповідними установами.",
+card5Title:"НОРМАТИВНІ МАТЕРІАЛИ",card5Text:"Рішення, положення та документи BRV.",
+card6Title:"ЗВЕРНЕННЯ",card6Text:"Контактна інформація та порядок інформаційних звернень.",
+details:"ДЕТАЛЬНІШЕ →",
+policyLabel:"03 / ПОЛІТИКА BRV",policyTitle:"ДЕПОРТАЦІЙНА ПОЛІТИКА",policyIntro:"Позиція BRV щодо осіб, які ухиляються від виконання військового обов'язку.",
+policyBox1Title:"ЗАГАЛЬНИЙ ПІДХІД",policyBox1Text:"Політика BRV передбачає розгляд питання повернення осіб, визначених відповідно до встановлених критеріїв як такі, що ухиляються від військового обов'язку.",
+policyBox2Title:"ПРАВОВІ ПИТАННЯ",policyBox2Text:"Рішення щодо повернення або видворення розглядаються відповідно до правових підстав, компетенції органів та процедур індивідуального оскарження.",
+policyBox3Title:"КАТЕГОРІЇ ОСІБ",policyBox3Text:"Інформаційний розділ охоплює питання військового обліку, порушення правил обліку та інших передбачених законом підстав.",
+policyBox4Title:"МІЖНАРОДНА ВЗАЄМОДІЯ",policyBox4Text:"Питання співпраці з іноземними органами розглядаються з урахуванням міжнародного права та законодавства відповідних держав.",
+dataLabel:"04 / ІНФОРМАЦІЙНІ РЕСУРСИ",dataTitle:"ВИКОРИСТАННЯ ДАНИХ ІЗ «РЕЗЕРВ+»",dataIntro:"Інформаційний напрям щодо відомостей, які містяться в українській системі «Резерв+».",
+dataBox1Title:"ІНФОРМАЦІЙНІ ВІДОМОСТІ",dataBox1Text:"Розгляд категорій відомостей, їх призначення та нормативних підстав обробки.",
+dataBox2Title:"ЗАХИСТ ДАНИХ",dataBox2Text:"Доступ до персональних даних, їх передача та обробка відповідно до правових підстав.",
+dataBox3Title:"МІЖВІДОМЧИЙ ОБМІН",dataBox3Text:"Правові моделі обміну інформацією між компетентними органами.",
+dataBox4Title:"ПЕРЕВІРКА ВІДОМОСТЕЙ",dataBox4Text:"Точність, актуальність та відповідність відомостей правовим вимогам.",
+documentsLabel:"05 / ДОКУМЕНТАЦІЯ",documentsTitle:"НОРМАТИВНІ МАТЕРІАЛИ",documentsIntro:"Основні документи та положення, пов'язані з діяльністю UWEG.",
+document1:"Рішення № 2 BRV Parlament",document2:"Положення про UWEG",document3:"Положення про міжвідомчу взаємодію",document4:"Політика обробки персональних даних",documentStatus:"ДОКУМЕНТ",
+cooperationTitle:"МІЖВІДОМЧА СПІВПРАЦЯ",cooperationText:"Взаємодія Міністерства внутрішніх справ BRV та Міністерства оборони України.",
+contactTitle:"КОНТАКТИ UWEG",contactText:"Для інформаційних звернень використовуйте WhatsApp.",contactButton:"НАПИСАТИ",footerText:"Ukrainische Wehrpflicht-Erfassungsstelle"
+},
+
+de:{
+navAbout:"ÜBER UWEG",navDepartments:"BEREICHE",navPolicy:"POLITIK",navData:"DATEN",navDocuments:"DOKUMENTE",navContact:"KONTAKT",
+heroLabel:"UWEG — ZENTRUM FÜR INFORMATIONSKOORDINATION",
+heroLine1:"ERFASSUNG.",heroLine2:"KOORDINATION.",heroLine3:"VERANTWORTUNG.",
+heroText:"UWEG-Informationsportal: Wehrpflicht, behördenübergreifende Zusammenarbeit, Informationsressourcen und normative Materialien.",
+heroButton:"BEREICHE ANSEHEN",heroButton2:"DOKUMENTATION",
+aboutLabel:"01 / ÜBER UWEG",aboutText:"UWEG ist eine Informationsstruktur zu Fragen der Wehrpflicht, Regulierung und behördenübergreifenden Koordination.",
+departmentsLabel:"02 / BEREICHE",departmentsTitle:"HAUPTBEREICHE",departmentsText:"Die wichtigsten Informationsbereiche von UWEG.",
+card1Title:"WEHRPFLICHT",card1Text:"Informationen zur Wehrpflicht, Registrierung und rechtlichen Bestimmungen.",
+card2Title:"ABSCHIEBUNGSPOLITIK",card2Text:"BRV-Politik in Bezug auf Personen, die sich der Wehrpflicht entziehen.",
+card3Title:"RESERV+",card3Text:"Informationen zur Nutzung von Angaben aus dem ukrainischen System Reserv+.",
+card4Title:"BEHÖRDENKOORDINATION",card4Text:"Koordination der Zusammenarbeit zwischen zuständigen Stellen.",
+card5Title:"NORMATIVE MATERIALIEN",card5Text:"Beschlüsse, Regelungen und Dokumente der BRV.",
+card6Title:"ANFRAGEN",card6Text:"Kontaktinformationen und Hinweise zu Informationsanfragen.",
+details:"MEHR ERFAHREN →",
+policyLabel:"03 / BRV-POLITIK",policyTitle:"ABSCHIEBUNGSPOLITIK",policyIntro:"Position der BRV zu Personen, die sich ihrer Wehrpflicht entziehen.",
+policyBox1Title:"ALLGEMEINER ANSATZ",policyBox1Text:"Die BRV-Politik sieht eine Prüfung der Rückkehr von Personen vor, die nach festgelegten Kriterien als Wehrpflichtentzieher eingestuft werden.",
+policyBox2Title:"RECHTLICHE FRAGEN",policyBox2Text:"Entscheidungen über Rückkehr oder Abschiebung werden auf Grundlage des geltenden Rechts und der zuständigen Verfahren behandelt.",
+policyBox3Title:"PERSONENGRUPPEN",policyBox3Text:"Der Informationsbereich umfasst Fragen der Wehrpflichtregistrierung und möglicher Verstöße gegen entsprechende Vorschriften.",
+policyBox4Title:"INTERNATIONALE ZUSAMMENARBEIT",policyBox4Text:"Die Zusammenarbeit mit ausländischen Behörden richtet sich nach dem Völkerrecht und dem Recht der jeweiligen Staaten.",
+dataLabel:"04 / INFORMATIONSSYSTEME",dataTitle:"NUTZUNG VON DATEN AUS RESERV+",dataIntro:"Informationen zu den Angaben im ukrainischen System Reserv+.",
+dataBox1Title:"INFORMATIONEN",dataBox1Text:"Datenkategorien, ihre Zwecke und rechtliche Grundlagen der Verarbeitung.",
+dataBox2Title:"DATENSCHUTZ",dataBox2Text:"Zugriff, Übermittlung und Verarbeitung personenbezogener Daten gemäß den geltenden Rechtsgrundlagen.",
+dataBox3Title:"INFORMATIONSAUSTAUSCH",dataBox3Text:"Rechtliche Modelle für den Informationsaustausch zwischen zuständigen Behörden.",
+dataBox4Title:"DATENPRÜFUNG",dataBox4Text:"Richtigkeit, Aktualität und rechtliche Konformität der Angaben.",
+documentsLabel:"05 / DOKUMENTATION",documentsTitle:"NORMATIVE MATERIALIEN",documentsIntro:"Wichtige Dokumente und Bestimmungen im Zusammenhang mit UWEG.",
+document1:"Beschluss Nr. 2 des BRV-Parlaments",document2:"UWEG-Satzung",document3:"Regelung zur Behördenkooperation",document4:"Datenschutzrichtlinie",documentStatus:"DOKUMENT",
+cooperationTitle:"BEHÖRDENÜBERGREIFENDE ZUSAMMENARBEIT",cooperationText:"Zusammenarbeit zwischen dem Innenministerium der BRV und dem Verteidigungsministerium der Ukraine.",
+contactTitle:"UWEG-KONTAKT",contactText:"Für Informationsanfragen nutzen Sie WhatsApp.",contactButton:"SCHREIBEN",footerText:"Ukrainische Wehrpflicht-Erfassungsstelle"
+},
+
+ru:{
+navAbout:"О UWEG",navDepartments:"НАПРАВЛЕНИЯ",navPolicy:"ПОЛИТИКА",navData:"ДАННЫЕ",navDocuments:"ДОКУМЕНТЫ",navContact:"КОНТАКТЫ",
+heroLabel:"UWEG — ЦЕНТР ИНФОРМАЦИОННОЙ КООРДИНАЦИИ",
+heroLine1:"УЧЁТ.",heroLine2:"КООРДИНАЦИЯ.",heroLine3:"ОТВЕТСТВЕННОСТЬ.",
+heroText:"Информационный портал UWEG: воинский учёт, межведомственное взаимодействие, использование информационных ресурсов и нормативные материалы.",
+heroButton:"НАПРАВЛЕНИЯ",heroButton2:"ДОКУМЕНТАЦИЯ",
+aboutLabel:"01 / О UWEG",aboutText:"UWEG — информационная структура по вопросам воинского учёта, нормативного регулирования и межведомственной координации.",
+departmentsLabel:"02 / НАПРАВЛЕНИЯ",departmentsTitle:"ОСНОВНЫЕ НАПРАВЛЕНИЯ",departmentsText:"Основные информационные направления UWEG.",
+card1Title:"ВОИНСКИЙ УЧЁТ",card1Text:"Информация о воинской обязанности, учёте и нормативных положениях.",
+card2Title:"ДЕПОРТАЦИОННАЯ ПОЛИТИКА",card2Text:"Политика BRV в отношении лиц, уклоняющихся от воинской обязанности.",
+card3Title:"РЕЗЕРВ+",card3Text:"Информация об использовании сведений из украинской системы «Резерв+».",
+card4Title:"МЕЖВЕДОМСТВЕННОЕ ВЗАИМОДЕЙСТВИЕ",card4Text:"Координация информационного взаимодействия между соответствующими учреждениями.",
+card5Title:"НОРМАТИВНЫЕ МАТЕРИАЛЫ",card5Text:"Решения, положения и документы BRV.",
+card6Title:"ОБРАЩЕНИЯ",card6Text:"Контактная информация и порядок информационных обращений.",
+details:"ПОДРОБНЕЕ →",
+policyLabel:"03 / ПОЛИТИКА BRV",policyTitle:"ДЕПОРТАЦИОННАЯ ПОЛИТИКА",policyIntro:"Позиция BRV в отношении лиц, уклоняющихся от исполнения воинской обязанности.",
+policyBox1Title:"ОБЩИЙ ПОДХОД",policyBox1Text:"Политика BRV предусматривает рассмотрение вопроса возвращения лиц, определённых по установленным критериям как уклоняющиеся от воинской обязанности.",
+policyBox2Title:"ПРАВОВЫЕ ВОПРОСЫ",policyBox2Text:"Решения о возвращении или высылке рассматриваются на основании действующего права и установленных процедур.",
+policyBox3Title:"КАТЕГОРИИ ЛИЦ",policyBox3Text:"Информационный раздел охватывает вопросы воинского учёта и возможных нарушений соответствующих правил.",
+policyBox4Title:"МЕЖДУНАРОДНОЕ ВЗАИМОДЕЙСТВИЕ",policyBox4Text:"Сотрудничество с иностранными органами рассматривается с учётом международного права и законодательства соответствующих государств.",
+dataLabel:"04 / ИНФОРМАЦИОННЫЕ РЕСУРСЫ",dataTitle:"ИСПОЛЬЗОВАНИЕ ДАННЫХ ИЗ «РЕЗЕРВ+»",dataIntro:"Информация о сведениях, содержащихся в украинской системе «Резерв+».",
+dataBox1Title:"ИНФОРМАЦИОННЫЕ СВЕДЕНИЯ",dataBox1Text:"Категории сведений, их назначение и правовые основания обработки.",
+dataBox2Title:"ЗАЩИТА ДАННЫХ",dataBox2Text:"Доступ к персональным данным, их передача и обработка в соответствии с правовыми основаниями.",
+dataBox3Title:"МЕЖВЕДОМСТВЕННЫЙ ОБМЕН",dataBox3Text:"Правовые модели обмена информацией между компетентными органами.",
+dataBox4Title:"ПРОВЕРКА СВЕДЕНИЙ",dataBox4Text:"Точность, актуальность и соответствие сведений правовым требованиям.",
+documentsLabel:"05 / ДОКУМЕНТАЦИЯ",documentsTitle:"НОРМАТИВНЫЕ МАТЕРИАЛЫ",documentsIntro:"Основные документы и положения, связанные с деятельностью UWEG.",
+document1:"Решение № 2 BRV Parlament",document2:"Положение об UWEG",document3:"Положение о межведомственном взаимодействии",document4:"Политика обработки персональных данных",documentStatus:"ДОКУМЕНТ",
+cooperationTitle:"МЕЖВЕДОМСТВЕННОЕ СОТРУДНИЧЕСТВО",cooperationText:"Взаимодействие Министерства внутренних дел BRV и Министерства обороны Украины.",
+contactTitle:"КОНТАКТЫ UWEG",contactText:"Для информационных обращений используйте WhatsApp.",contactButton:"НАПИСАТЬ",footerText:"Ukrainische Wehrpflicht-Erfassungsstelle"
+}
+};
+
+function safeGet(key) {
+    try { return localStorage.getItem(key); }
+    catch (_) { return null; }
+}
+
+function safeSet(key,value) {
+    try { localStorage.setItem(key,value); }
+    catch (_) {}
+}
+
+function setLanguage(lang) {
+    if (!translations[lang]) lang="uk";
+
+    document.documentElement.lang=lang;
+
+    document.querySelectorAll("[data-i18n]").forEach(el=>{
+        const value=translations[lang][el.dataset.i18n];
+        if (typeof value==="string") el.textContent=value;
+    });
+
+    document.getElementById("language").value=lang;
+    safeSet("uweg-language",lang);
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+    const nav=document.getElementById("navigation");
+    const menu=document.getElementById("menuButton");
+    const selector=document.getElementById("language");
+
+    selector.addEventListener("change",e=>setLanguage(e.target.value));
+
+    menu.addEventListener("click",()=>{
+        const open=nav.classList.toggle("open");
+        menu.textContent=open?"✕":"☰";
+        menu.setAttribute("aria-expanded",String(open));
+    });
+
+    nav.querySelectorAll("a").forEach(link=>{
+        link.addEventListener("click",()=>{
+            nav.classList.remove("open");
+            menu.textContent="☰";
+            menu.setAttribute("aria-expanded","false");
+        });
+    });
+
+    window.addEventListener("resize",()=>{
+        if(window.innerWidth>850) {
+            nav.classList.remove("open");
+            menu.textContent="☰";
+            menu.setAttribute("aria-expanded","false");
+        }
+    });
+
+    document.getElementById("year").textContent=new Date().getFullYear();
+
+    const saved=safeGet("uweg-language");
+    setLanguage(translations[saved]?saved:"uk");
+});
+</script>
+
+</body>
+</html>
